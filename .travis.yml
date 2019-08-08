@@ -1,0 +1,22 @@
+language: generic
+sudo: required
+
+services:
+  - docker
+
+before_install:
+  - docker build -t foxlol/react-fibonacci -f ./client/Dockerfile.dev ./client
+
+script:
+  - docker run -e CI=TRUE foxlol/react-fibonacci npm run test --bail
+
+after_success:
+  - docker build -t foxlol/complex-fibonacci-client ./client
+  - docker build -t foxlol/complex-fibonacci-nginx ./nginx
+  - docker build -t foxlol/complex-fibonacci-server ./server
+  - docker build -t foxlol/complex-fibonacci-worker ./worker
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  - docker push foxlol/complex-fibonacci-client
+  - docker push foxlol/complex-fibonacci-nginx
+  - docker push foxlol/complex-fibonacci-server
+  - docker push foxlol/complex-fibonacci-worker
