@@ -8,6 +8,8 @@ class Fibonacci extends Component {
     index: ""
   };
 
+  lastElement = null;
+
   componentDidMount() {
     this.fetchValues();
     this.fetchIndexes();
@@ -32,6 +34,7 @@ class Fibonacci extends Component {
 
     this.setState({ index: "" });
     this.fetchValues();
+    this.lastElement.scrollIntoView({ behavior: "smooth" });
   };
 
   renderSeenIndexes() {
@@ -43,7 +46,7 @@ class Fibonacci extends Component {
 
     for (let key in this.state.values) {
       entries.push(
-        <div key={key}>
+        <div key={key} ref={(el) => this.lastElement = el}>
           For index {key} I calculated {this.state.values[key]}
         </div>
       );
