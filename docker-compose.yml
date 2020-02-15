@@ -2,6 +2,8 @@ version: "3"
 services:
   postgres:
     image: "postgres"
+    environment: 
+      - POSTGRES_PASSWORD=postgres_password
   redis:
     image: "redis"
   nginx:
@@ -21,11 +23,11 @@ services:
     environment:
       - REDIS_HOST=redis
       - REDIS_PORT=6379
-      - PGUSER=postgres
-      - PGHOST=postgres
-      - PGDATABASE=postgres
-      - PGPASSWORD=postgres_password
-      - PGPORT=5432
+      - POSTGRES_USER=postgres
+      - POSTGRES_HOST=postgres
+      - POSTGRES_DB=postgres
+      - POSTGRES_PASSWORD=postgres_password
+      - POSTGRES_PORT=5432
     depends_on:
       - postgres
       - redis

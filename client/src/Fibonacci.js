@@ -31,6 +31,7 @@ class Fibonacci extends Component {
     });
 
     this.setState({ index: "" });
+    this.fetchValues();
   };
 
   renderSeenIndexes() {
